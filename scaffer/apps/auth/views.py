@@ -25,7 +25,7 @@ class AuthView(APIView):
     
     def post(self, request):
         if not self.request.session.test_cookie_worked():
-            return HttpResponse(_("Please enable cookies and try again."))
+            return HttpResponse("Please enable cookies and try again.")
         try:
             username = request.data.get('username')
             password = request.data.get('password')
