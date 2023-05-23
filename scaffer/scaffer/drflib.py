@@ -6,4 +6,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_TOKEN_EXPIRE_TIME': 3600
 }
