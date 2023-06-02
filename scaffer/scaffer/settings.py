@@ -24,13 +24,38 @@ SECRET_KEY = 'django-insecure--+p&87inaa^q--sp!bgns54$5@x6th0xtll^!jgadpcl!6r*)@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+ALLLOGIN_MUILTI = True
 ALLOWED_HOSTS = ['*']
-
-
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'None'
+CORS_ALLOW_CREDENTIALS = True  # 允许ajax跨域请求时携带cookie
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'origin',
+    'user-agent',
+    'x-token',
+    'x-csrftoken',
+    'x-requested-with',
+]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,22 +63,27 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'asset.apps.AssetConfig',
+    'authen.apps.AuthenConfig',
     'flow.apps.FlowConfig',
     'probe.apps.ProbeConfig',
     'scanner.apps.ScannerConfig',
-    'user.apps.UserConfig',
-    'rest_framework'
+    'user.apps.UserConfig',    
 ]
+AUTH_USER_MODEL = 'user.UserProfile'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+SESSION_COOKIE_AGE = 60 * 30
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 ROOT_URLCONF = 'scaffer.urls'
 

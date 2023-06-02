@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from user.models import User
+from user.models import UserProfile
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -10,5 +10,5 @@ class UserSerializer(serializers.ModelSerializer):
         return super().validate(attrs)
 
     class Meta:
-        model = User
+        model = UserProfile
         fields = ['id','username','name','password','last_login']

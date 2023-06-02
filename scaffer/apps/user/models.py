@@ -1,6 +1,7 @@
+import uuid
 from django.utils import timezone
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class AuthMixin:
@@ -25,11 +26,9 @@ class AuthMixin:
         self.set_password(new_password)
         self.save()
 
-class User(AuthMixin,AbstractBaseUser):
-    username = models.CharField(max_length=64,default='adwins',blank=True,null=True)
+class UserProfile(AuthMixin,AbstractUser):
     name = models.CharField(max_length=64,default='adwins',blank=True,null=True)
-    password = models.CharField(default='', max_length=128)
-    is_active = models.BooleanField(default=True)
+    create_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{0.name}({0.username})'.format(self)
