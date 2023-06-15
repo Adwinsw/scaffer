@@ -26,9 +26,6 @@ class SessionAuthentication(authentication.SessionAuthentication):
         except exceptions.AuthenticationFailed:
             return None
 
-        if not CustomTokenAuthentication().authenticate(request):
-            return None
-
         # CSRF passed with authenticated user
         return user, None
 

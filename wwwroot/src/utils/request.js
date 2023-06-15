@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import router from '@/router/index'
+import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken, getCookie } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -19,8 +20,8 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-CSRFToken'] = getToken()
-      config.headers['X-Token'] = store.getters.token
+      config.headers['X-CSRFToken'] = getCookie('csrftoken')
+      config.headers['X-Token'] = getToken('usertoken')
     }
     return config
   },
@@ -48,14 +49,13 @@ service.interceptors.response.use(
     // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
     if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
       // to re-login
-      MessageBox.confirm('登陆已过期！', 'Confirm logout', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        store.dispatch('user/resetToken').then(() => {
-          location.reload()
-        })
+      Message({
+        message: '会话已过期, 请重新登录',
+        type: 'warning',
+        duration: 3 * 1000
+      })
+      store.dispatch('user/resetToken').then(() => {
+        router.push({ path: '/login' })
       })
       return Promise.reject(new Error(res.message || 'Error'))
     } else if (res.code !== 20000) {
@@ -73,11 +73,14 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.message,
+      message: '会话出现异常, 请重新登录',
       type: 'error',
-      duration: 5 * 1000
+      duration: 3 * 1000
     })
-    return Promise.reject(error)
+    store.dispatch('user/resetToken').then(() => {
+      router.push({ path: '/login' })
+    })
+    return Promise.reject(new Error(error || 'Error'))
   }
 )
 

@@ -89,7 +89,27 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/index',
+    name: '用户管理',
+    meta: { title: '用户管理', icon: 'user' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/user/Profile'),
+        name: 'UserProfile',
+        meta: { title: '用户列表' }
+      },
+      {
+        path: 'group',
+        component: () => import('@/views/user/Group'),
+        name: 'UserGroup',
+        meta: { title: '用户组' }
+      }
+    ]
+  },
   {
     path: '/nested',
     component: Layout,
@@ -145,17 +165,6 @@ export const constantRoutes = [
         component: () => import('@/views/nested/menu2/index'),
         name: 'Menu2',
         meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
       }
     ]
   },

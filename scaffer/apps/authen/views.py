@@ -43,7 +43,7 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [SessionAuthentication, CustomTokenAuthentication]
     permission_classes = []
 
     def post(self,request):

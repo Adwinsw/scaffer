@@ -3,7 +3,8 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <img src="../../assets/imgs/fic.png" title="logo" style="float:left;">
+        <h3 class="title">vue template</h3>
       </div>
 
       <el-form-item prop="username">
@@ -36,12 +37,12 @@
           auto-complete="on"
           @keyup.enter.native="handleLogin"
         />
-        <span class="show-pwd" @click="showPwd">
+        <!-- <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
+        </span> -->
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" class="btn-org" @click.native.prevent="handleLogin">登 录</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -115,7 +116,6 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('提交错误！')
           return false
         }
       })
@@ -170,21 +170,32 @@ $cursor: #6199EA;
     border-radius: 10px;
     color: #454545;
   }
+
+  .btn-org{
+    width:80%;
+    font-size: 16px;
+    margin-bottom:30px;
+    border-radius: 10px;
+    background-color: #0077E8;
+    border-color: #0077E8;
+  }
 }
 </style>
 
 <style lang="scss" scoped>
 $bg:#2d3a4b;
 $dark_gray:#6199EA;
-$light_gray:#eee;
+$light_gray:#0074C1;
 
 .login-container {
+  background: url('../../assets/imgs/bj.png') no-repeat center;
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
 
   .login-form {
+    background: url('../../assets/imgs/login.png') no-repeat center;
     position: relative;
     width: 520px;
     max-width: 100%;
@@ -193,6 +204,7 @@ $light_gray:#eee;
     margin-top: 15rem;
     margin-right: 12.5rem;
     overflow: hidden;
+    text-align: center;
   }
 
   .tips {
@@ -219,11 +231,12 @@ $light_gray:#eee;
     position: relative;
 
     .title {
-      font-size: 26px;
+      font-size: 24px;
       color: $light_gray;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+      padding-top:10px;
     }
   }
 

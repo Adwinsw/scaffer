@@ -18,3 +18,16 @@ export function validUsername(str) {
   const valid_map = ['admin', 'editor']
   return valid_map.indexOf(str.trim()) >= 0
 }
+
+/**
+ * @param {*} obj
+ * @returns {Boolean}
+ */
+export function isArray(obj) {
+  if (!Array.isArray) {
+    Array.isArray = function(arg) {
+      return Object.prototype.toString.call(arg) === '[object Array]'
+    }
+  }
+  return true
+}

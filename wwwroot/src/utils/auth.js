@@ -1,17 +1,21 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'usertoken'
+const keytoken = 'usertoken'
+const csrftoken = 'csrftoken'
+const keysession = 'sessionid'
 
-export function getToken() {
+export function getToken(TokenKey) {
   return Cookies.get(TokenKey)
 }
 
-export function setToken(token) {
+export function setToken(TokenKey, token) {
   return Cookies.set(TokenKey, token)
 }
 
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  Cookies.remove(csrftoken)
+  Cookies.remove(keysession)
+  return Cookies.remove(keytoken)
 }
 
 export function getCookie(name) {

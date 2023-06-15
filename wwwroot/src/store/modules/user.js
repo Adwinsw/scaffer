@@ -4,7 +4,7 @@ import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
-    token: getToken(),
+    token: getToken('usertoken'),
     name: '',
     username: ''
   }
@@ -35,7 +35,8 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         const data = response
         commit('SET_TOKEN', data.token)
-        setToken(getCookie('csrftoken'))
+        setToken('usertoken', data.token)
+        setToken('csrftoken', getCookie('csrftoken'))
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -53,8 +54,8 @@ const actions = {
           return reject('认证错误，请重新登录！')
         }
 
-        commit('SET_NAME', data.username)
-        commit('SET_AVATAR', data.name)
+        commit('SET_NAME', data.name)
+        commit('SET_AVATAR', data.username)
         resolve(data)
       }).catch(error => {
         reject(error)
